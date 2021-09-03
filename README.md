@@ -26,3 +26,4 @@ Rinkeby Teller Options
 ### TODO 
 
 build simple express server to serve the images 
+optimize the image generation script so it is less wasteful 
