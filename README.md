@@ -11,7 +11,9 @@ yarn install
 yarn build 
 yarn start 
 
+(in another terminal)
 
+yarn wolfpack     <-----  This will populate the mongo db with options from web3
 
 
 ####
