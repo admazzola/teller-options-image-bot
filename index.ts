@@ -12,8 +12,10 @@ async function start(){
     
     const imageBuilder = new ImageBuilder()
     const web3Reader = new Web3Reader(mongoInterface)
+
+    web3Reader.init()
     
-    setInterval( web3Reader.run , 8000 );
+    
      
     setInterval( imageBuilder.run , 8000 );
     

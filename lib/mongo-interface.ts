@@ -67,28 +67,13 @@ export default class MongoInterface  {
       await   mongoose.connect(url,{  }) 
 
 
-      console.log('connecting to ', url, dbName )
-   /*   var database = await new Promise((resolve, reject) => {
-        mongoose.connect(url,{
-          
-          }) 
-
-
-
-         // if(config && config.apiMode == true) return //do not make indexes if api mode
-          resolve(true)
-        
-        //set up database constraints to prevent data corruption
-        //await this.createCollectionUniqueIndexes()
-      });*/
-
-
-
+      console.log('connected to ', url, dbName )
+   
 
     }
  
 
-    async findOption(filter: FilterQuery<UnknownType>|undefined ) : Promise< Document<any,any,unknown>|null > {
+    async findOption(filter: FilterQuery<UnknownType>|undefined ) : Promise< any > {
        const instance = await TellerOptionsModel.findOne(filter );
      //console.log(instance.my.key);  // 'hello'
 
