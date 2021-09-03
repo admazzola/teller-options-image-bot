@@ -7,7 +7,7 @@
     "start": "node ./dist/index.js ",
     "wolfpack": "node ./wolfpack.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "copy-files": "cp -r ./config/ ./dist && cp -r ./abi/ ./dist",
+    "copy-files": "cp -r ./config/ ./dist && cp -r ./abi/ ./dist && cp -r ./tellerassets/ ./dist",
     "build": "yarn tsc && yarn copy-files"
   },
   "author": "",
@@ -19,6 +19,7 @@
     "@types/chai": "^4.2.14",
     "@types/chai-as-promised": "^7.1.3",
     "axios": "^0.21.1",
+    "jimp": "^0.16.1",
     "mocha": "^7.1.0",
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.4",

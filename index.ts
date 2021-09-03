@@ -4,6 +4,21 @@ import Web3Reader from './lib/web3-reader'
 
 import MongoInterface from './lib/mongo-interface'
 
+const path = require('path');
+const fs = require('fs');
+
+//generate folders for downloaded metadata assets 
+try{
+    fs.mkdirSync(path.resolve(__dirname, './tokenassets'))
+}catch(e){}
+
+try{
+    fs.mkdirSync(path.resolve(__dirname, './formattedimages'))
+}catch(e){}
+
+try{
+    fs.mkdirSync(path.resolve(__dirname, './generatedimages'))
+}catch(e){}
 
 async function start(){
 
@@ -14,8 +29,7 @@ async function start(){
     const web3Reader = new Web3Reader(mongoInterface)
 
     web3Reader.init()
-    
-    
+     
      
     setInterval( imageBuilder.run , 8000 );
     

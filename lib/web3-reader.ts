@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
+import Jimp = require('jimp');
+ 
 
 const web3config = require('../config/web3config')
 const TellerOptionsABI = require('../abi/TellerOptionsABI')
@@ -54,22 +56,57 @@ export default class Web3Reader{
 
 
         if(optionData){
-            let NFTContract = new web3.eth.Contract(ERC721ABI, optionData.nftContractAddress )
-            let tokenURI = await NFTContract.methods.tokenURI( optionData.nftTokenId ).call()
+           
+            try{
+                let NFTContract = new web3.eth.Contract(ERC721ABI, optionData.nftContractAddress )
+                let tokenURI = await NFTContract.methods.tokenURI( optionData.nftTokenId ).call()
+                
+                console.log(tokenURI)
+    
+                let filePath = path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.json'))
+    
             
-            console.log(tokenURI)
+                //add tokenURI to the option record in mongo 
+                await this.downloadAsset(tokenURI, filePath   )
 
-            let filePath = path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.json'))
+                let metadataFile =fs.readFileSync(filePath);
+                let metadataParsed = JSON.parse(metadataFile);
 
-            //add tokenURI to the option record in mongo 
-            await this.downloadAsset(tokenURI, filePath   )
+                let imagePath =  path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.jpg'))
+                await this.downloadAsset(metadataParsed.image, imagePath   )
 
-            let metadataFile =fs.readFileSync(filePath);
-            let metadataParsed = JSON.parse(metadataFile);
+                let tellerBorderImagePath = path.resolve(__dirname,  '../tellerassets', 'TellerOptionsOverlay'.concat('.png'))
 
-            let imagePath =  path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.jpg'))
-            await this.downloadAsset(metadataParsed.image, imagePath   )
+                Jimp.read(tellerBorderImagePath)
+                    .then(tellerBorder => {
+                        Jimp.read(imagePath)
+                        .then(image => {
+                            let formattedImagePath = path.resolve(__dirname,  '../formattedimages',optionIdToRead.toString().concat('.jpg'))
+    
+                            return image
+                            
+                            .contain(512, 512, Jimp.HORIZONTAL_ALIGN_LEFT | Jimp.VERTICAL_ALIGN_TOP)
+                            //.quality(90) // set JPEG quality 
+                            .composite( tellerBorder,0,0)   
+                            .write(formattedImagePath); // save
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+
+                    }) .catch(err => {
+                        console.error(err);
+                    });
+
+               
+
+
+            }catch(e){
+                console.error(e)
+            } 
+        
         }
+
 
         optionIdToRead+=1;
         if(optionIdToRead >= optionsCount){
