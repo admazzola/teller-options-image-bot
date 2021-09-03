@@ -75,6 +75,11 @@ export default class Web3Reader{
                 let imagePath =  path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.jpg'))
                 await this.downloadAsset(metadataParsed.image, imagePath   )
 
+                let assetName = metadataParsed.name
+
+                const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
+
+
                 let tellerBorderImagePath = path.resolve(__dirname,  '../tellerassets', 'TellerOptionsOverlay'.concat('.png'))
 
                 Jimp.read(tellerBorderImagePath)
@@ -88,6 +93,9 @@ export default class Web3Reader{
                             .contain(512, 512, Jimp.HORIZONTAL_ALIGN_LEFT | Jimp.VERTICAL_ALIGN_TOP)
                             //.quality(90) // set JPEG quality 
                             .composite( tellerBorder,0,0)   
+                            
+                            .print(font, 270, 460,   assetName.substring(0,26))
+
                             .write(formattedImagePath); // save
                         })
                         .catch(err => {
