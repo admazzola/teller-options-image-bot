@@ -8,13 +8,17 @@ Generates image files for teller options NFTs
 #### Commands 
 `
 yarn install 
+
 yarn build 
+
 yarn start 
 `
+
 
 (in another terminal)
 
 Continuously populate the mongo db with options from web3
+
 `
 yarn wolfpack      
 `
@@ -24,6 +28,7 @@ yarn wolfpack
 (in another terminal)
 
 Serve the images that have been generated 
+
 `
 yarn webserver      
 `
