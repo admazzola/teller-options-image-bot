@@ -1,5 +1,5 @@
  
-import  {FilterQuery, Mongoose, Document} from 'mongoose'; 
+import  {FilterQuery, Mongoose, Document, UpdateQuery, Query} from 'mongoose'; 
 import { UnknownType } from 'typechain';
  
 let mongoose = new Mongoose()
@@ -20,7 +20,9 @@ const TellerOption = new Schema({
   nftTokenId: Number,
   status: String,
   creator: String,
-  nftContractAddress: String
+  nftContractAddress: String,
+  imageUpdateAttemptedAt: Number,
+  imageLastUpdatedAt: Number
 })
 
 
@@ -73,12 +75,26 @@ export default class MongoInterface  {
     }
  
 
-    async findOption(filter: FilterQuery<UnknownType>|undefined ) : Promise< any > {
-       const instance = await TellerOptionsModel.findOne(filter );
-     //console.log(instance.my.key);  // 'hello'
-
+    async findOption(query: FilterQuery<UnknownType>|undefined ) : Promise< any > {
+       const instance = await TellerOptionsModel.findOne(query );
+      
       return instance;
     }
+
+    async findManyOptions(query: FilterQuery<UnknownType> ) : Promise< any > {
+      const instance = await TellerOptionsModel.find(query);
+     
+     return instance;
+   }
+
+
+
+    async updateOption(query: FilterQuery<UnknownType>|undefined ,update: UpdateQuery<UnknownType>|undefined ) : Promise< any > {
+      const instance = await TellerOptionsModel.findOneAndUpdate(query,update);
+      console.log('update', instance)
+     return instance;
+   }
+
 
     async saveOption( ){
       

@@ -17,11 +17,11 @@ const web3 = new Web3(web3config.web3provider)
 
 
 var mongoInterface:MongoInterface;
-var optionIdToRead = 0;  
+var optionIndexToRead = 0;  
 var optionsCount:Number = 0;
 
 
-export default class Web3Reader{
+export default class ImageProcessor{
 
     constructor(mInterface:MongoInterface){
         mongoInterface = mInterface;
@@ -44,14 +44,23 @@ export default class Web3Reader{
 
 
     async run(){
-        console.log('run web3 reader ', mongoInterface)
+        
+        const STALE_TIME = 3600*1000 //one hour 
+
+        
+        let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]  } )
+        console.log('optionsWithoutRecentImages: ',optionsWithoutRecentImages.length)
 
 
-        let optionData = await mongoInterface.findOption( {optionId: optionIdToRead} )
 
-       
+        if(optionsWithoutRecentImages[optionIndexToRead] === 'undefined'){
+            optionIndexToRead = 0
+            return 
+        }
 
-        console.log('optionData',optionData)
+        let optionData = optionsWithoutRecentImages[optionIndexToRead] // await mongoInterface.findOption( {optionId: optionIndexToRead} )
+
+        
 
 
 
@@ -63,8 +72,10 @@ export default class Web3Reader{
                 
                 console.log(tokenURI)
     
-                let filePath = path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.json'))
-    
+                let filePath = path.resolve(__dirname,  '../tokenassets',optionIndexToRead.toString().concat('.json'))
+                
+                await mongoInterface.updateOption( {optionId: optionData.optionId}, {imageUpdateAttemptedAt: Date.now()} )
+
             
                 //add tokenURI to the option record in mongo 
                 await this.downloadAsset(tokenURI, filePath   )
@@ -72,7 +83,7 @@ export default class Web3Reader{
                 let metadataFile =fs.readFileSync(filePath);
                 let metadataParsed = JSON.parse(metadataFile);
 
-                let imagePath =  path.resolve(__dirname,  '../tokenassets',optionIdToRead.toString().concat('.jpg'))
+                let imagePath =  path.resolve(__dirname,  '../tokenassets',optionIndexToRead.toString().concat('.jpg'))
                 await this.downloadAsset(metadataParsed.image, imagePath   )
 
                 let assetName = metadataParsed.name
@@ -82,11 +93,11 @@ export default class Web3Reader{
 
                 let tellerBorderImagePath = path.resolve(__dirname,  '../tellerassets', 'TellerOptionsOverlay'.concat('.png'))
 
-                Jimp.read(tellerBorderImagePath)
+                await Jimp.read(tellerBorderImagePath)
                     .then(tellerBorder => {
                         Jimp.read(imagePath)
                         .then(image => {
-                            let formattedImagePath = path.resolve(__dirname,  '../formattedimages',optionIdToRead.toString().concat('.jpg'))
+                            let formattedImagePath = path.resolve(__dirname,  '../formattedimages',optionIndexToRead.toString().concat('.jpg'))
     
                             return image
                             
@@ -106,7 +117,7 @@ export default class Web3Reader{
                         console.error(err);
                     });
 
-               
+               await mongoInterface.updateOption( {optionId: optionData.optionId}, {imageLastUpdatedAt: Date.now()} )
 
 
             }catch(e){
@@ -115,11 +126,11 @@ export default class Web3Reader{
         
         }
 
-
-        optionIdToRead+=1;
-        if(optionIdToRead >= optionsCount){
-            optionIdToRead = 0
-        }
+        
+        optionIndexToRead+=1;
+        if(optionIndexToRead >= optionsWithoutRecentImages.length){
+            optionIndexToRead = 0
+        } 
        
 
 
