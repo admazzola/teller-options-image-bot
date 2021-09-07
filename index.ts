@@ -16,9 +16,7 @@ try{
     fs.mkdirSync(path.resolve(__dirname, './formattedimages'))
 }catch(e){}
 
-try{
-    fs.mkdirSync(path.resolve(__dirname, './generatedimages'))
-}catch(e){}
+ 
 
 async function start(){
 
