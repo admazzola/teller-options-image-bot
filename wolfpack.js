@@ -11,15 +11,22 @@ async function init(){
     let web3 = new Web3( web3Config.web3provider  )
 
     let wolfPackConfig = {
-        contracts:[{address:"0xf560000371595a1c786e96b9d9ae21a5147dba31", startBlock: 9190406, type:'TellerOptions'} ],
+        contracts:[{
+            address:"0x145ca117C3030bC6019532b410AEa31174791b97",
+            startBlock:   9257224, type:'TellerOptions'
+            }],
         suffix:"dev",
         indexRate: 10*1000,
         courseBlockGap: 8000,
         logging:true,
         reScale: false,
-        customIndexers:[{ type:'TellerOptions', abi: TellerOptionsABI ,  handler: IndexerTellerOptions  }]
+        customIndexers:[{
+            type:'TellerOptions', 
+            abi: TellerOptionsABI ,  
+            handler: IndexerTellerOptions 
+         }]
     }
-    
+    console.log('meeeep')
     let wolfPack = new WolfPack()
     await wolfPack.init( {suffix: wolfPackConfig.suffix} )
     wolfPack.startIndexing( web3, wolfPackConfig )  

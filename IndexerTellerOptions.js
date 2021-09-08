@@ -10,7 +10,10 @@ module.exports =  class IndexerTellerOptions{
         let eventName = event.event   
 
         let outputs = event.returnValues
-  
+        
+        console.log("got eventName",eventName)
+ 
+        
         if(!eventName){
  
             console.log('WARN: unknown event in ', event.transactionHash )
@@ -21,13 +24,15 @@ module.exports =  class IndexerTellerOptions{
 
         
         if(eventName == 'optioncreated'){
+            let optionId =  parseInt(outputs['0'])
+            let creator = web3utils.toChecksumAddress( outputs['1'] )
+            
+            //let nftContractAddress = web3utils.toChecksumAddress( outputs['2'] )
+            //let nftTokenId =   parseInt(outputs['3'])
+
+            console.log("got option created ")
  
-            let creator = web3utils.toChecksumAddress( outputs['0'] )
-            let optionId =  parseInt(outputs['1'])
-            let nftContractAddress = web3utils.toChecksumAddress( outputs['2'] )
-            let nftTokenId =   parseInt(outputs['3'])
- 
-            await IndexerTellerOptions.optionCreated(  creator, optionId, nftContractAddress, nftTokenId, mongoInterface )
+            await IndexerTellerOptions.optionCreated( optionId, creator,  mongoInterface )
              
         }
          
@@ -78,14 +83,15 @@ module.exports =  class IndexerTellerOptions{
    }
 
    
-   static async optionCreated( creator, optionId, nftContractAddress, nftTokenId, mongoInterface ){
+   static async optionCreated( optionId, creator, mongoInterface ){
 
     let collectionName = 'teller_options'    
     
     let existing = await mongoInterface.findOne(collectionName, {optionId: optionId }  )
 
     if(!existing){ 
-        await mongoInterface.insertOne(collectionName, { creator:creator, optionId: optionId, nftContractAddress: nftContractAddress, nftTokenId: nftTokenId  }   )
+        //nftContractAddress: nftContractAddress, nftTokenId: nftTokenId 
+        await mongoInterface.insertOne(collectionName, { creator:creator, optionId: optionId }   )
     }
 }
 
