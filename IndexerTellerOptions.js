@@ -11,9 +11,8 @@ module.exports =  class IndexerTellerOptions{
 
         let outputs = event.returnValues
         
-        console.log("got eventName",eventName)
- 
         
+
         if(!eventName){
  
             console.log('WARN: unknown event in ', event.transactionHash )
@@ -30,8 +29,7 @@ module.exports =  class IndexerTellerOptions{
             //let nftContractAddress = web3utils.toChecksumAddress( outputs['2'] )
             //let nftTokenId =   parseInt(outputs['3'])
 
-            console.log("got option created ")
- 
+            
             await IndexerTellerOptions.optionCreated( optionId, creator,  mongoInterface )
              
         }
@@ -91,7 +89,7 @@ module.exports =  class IndexerTellerOptions{
 
     if(!existing){ 
         //nftContractAddress: nftContractAddress, nftTokenId: nftTokenId 
-        await mongoInterface.insertOne(collectionName, { creator:creator, optionId: optionId }   )
+        await mongoInterface.insertOne(collectionName, { creator:creator, optionId: optionId , status:'created'}   )
     }
 }
 

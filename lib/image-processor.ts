@@ -48,7 +48,7 @@ export default class ImageProcessor{
         const STALE_TIME = 3600*1000 //one hour 
 
         
-        let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]  } )
+        let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $and:[ { nftContractAddress: { $exists: true, $ne: null}  } ,{$or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]} ]  } )
         console.log('optionsWithoutRecentImages: ',optionsWithoutRecentImages.length)
 
 
