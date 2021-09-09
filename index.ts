@@ -21,13 +21,16 @@ try{
 
 async function start(){
 
-    let mongoInterface = new MongoInterface()
-    await mongoInterface.init('wolfpack_dev',{})
+    let wolfpackMongoInterface = new MongoInterface()
+    await wolfpackMongoInterface.init('wolfpack_dev',{})
+
+    let imageProcessingMongoInterface = new MongoInterface()
+    await imageProcessingMongoInterface.init('image_bot_dev',{})
     
-    const optionDataCollector = new OptionDataCollector(mongoInterface)
+    const optionDataCollector = new OptionDataCollector(wolfpackMongoInterface, imageProcessingMongoInterface )
     optionDataCollector.init() 
     
-    const imageProcessor = new ImageProcessor(mongoInterface)
+    const imageProcessor = new ImageProcessor(imageProcessingMongoInterface)
     imageProcessor.init()
      
       
