@@ -6,15 +6,7 @@ let mongoose = new Mongoose()
 
 const Schema = mongoose.Schema;
  
-/*
-const NonFungibleToken = new Schema({ 
-  tokenId: Number,
-  contractAddress: String,
-  hasCachedImage: Boolean,
-  TokenURI: String,
-  cachedMetadata: Object
-});*/
-
+ 
 const TellerOption = new Schema({
   optionId: Number,
   nftTokenId: Number,
@@ -33,8 +25,7 @@ const TellerOption = new Schema({
 const TellerOptionsModel = mongoose.model('teller_options', TellerOption);
 
 export default class MongoInterface  {
- 
-
+  
 
     constructor( ){
       
@@ -104,19 +95,9 @@ export default class MongoInterface  {
     console.log('update', instance)
     return instance;
   }
+ 
 
-
-    async saveOption( ){
-      
-    }
-    
-
-
-    
-     getMongoClient()
-     {
-       return mongoose;
-     }
+ 
 
 
 
