@@ -1,5 +1,6 @@
 
- 
+import OptionDataCollector from './lib/option-data-collector'
+
 import ImageProcessor from './lib/image-processor'
 
 import MongoInterface from './lib/mongo-interface'
@@ -23,14 +24,13 @@ async function start(){
     let mongoInterface = new MongoInterface()
     await mongoInterface.init('wolfpack_dev',{})
     
+    const optionDataCollector = new OptionDataCollector(mongoInterface)
+    optionDataCollector.init() 
     
     const imageProcessor = new ImageProcessor(mongoInterface)
-
     imageProcessor.init()
      
-     
-   
-    
+      
     console.log('Booting Teller Options Image Bot')
     
 }

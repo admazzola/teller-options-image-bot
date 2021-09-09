@@ -17,8 +17,7 @@ const web3 = new Web3(web3config.web3provider)
 
 
 var mongoInterface:MongoInterface;
-var optionIndexToRead = 0;  
-var optionsCount:Number = 0;
+var optionIndexToRead = 0;   
 
 
 export default class ImageProcessor{
@@ -28,17 +27,9 @@ export default class ImageProcessor{
         
     }
 
-    async updateOptionsCount( ){
-         
-        let TellerOptionsContract = new web3.eth.Contract(TellerOptionsABI, web3config.tellerOptionsContractAddress )
-        optionsCount = await TellerOptionsContract.methods.optionsCount().call()
-
-         
-    }
-
+    
     async init(){
-        await this.updateOptionsCount()
-        setInterval( this.updateOptionsCount , 30000 );
+        
         setInterval( this.run.bind(this) , 8000 );
     }
 
@@ -48,9 +39,8 @@ export default class ImageProcessor{
         const STALE_TIME = 3600*1000 //one hour 
 
         
-        let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $and:[ { nftContractAddress: { $exists: true, $ne: null}  } ,{$or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]} ]  } )
-        console.log('optionsWithoutRecentImages: ',optionsWithoutRecentImages.length)
-
+        let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $and:[ { nftContractAddress: { $exists: true }  } ,{$or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]} ]  } )
+        console.log('options without recent', optionsWithoutRecentImages)
 
 
         if(optionsWithoutRecentImages[optionIndexToRead] === 'undefined'){
@@ -102,7 +92,7 @@ export default class ImageProcessor{
                             return image
                             
                             .contain(512, 512, Jimp.HORIZONTAL_ALIGN_LEFT | Jimp.VERTICAL_ALIGN_TOP)
-                            //.quality(90) // set JPEG quality 
+                           
                             .composite( tellerBorder,0,0)   
                             
                             .print(font, 270, 460,   assetName.substring(0,26))

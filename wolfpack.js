@@ -12,8 +12,9 @@ async function init(){
 
     let wolfPackConfig = {
         contracts:[{
-            address:"0x145ca117C3030bC6019532b410AEa31174791b97",
-            startBlock:   9257224, type:'TellerOptions'
+            address: web3Config.tellerOptionsContractAddress,
+            startBlock:   web3Config.tellerOptionsContractStartBlock,
+            type:'TellerOptions'
             }],
         suffix:"dev",
         indexRate: 10*1000,
@@ -26,7 +27,7 @@ async function init(){
             handler: IndexerTellerOptions 
          }]
     }
-    console.log('meeeep')
+  
     let wolfPack = new WolfPack()
     await wolfPack.init( {suffix: wolfPackConfig.suffix} )
     wolfPack.startIndexing( web3, wolfPackConfig )  

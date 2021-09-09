@@ -26,9 +26,6 @@ module.exports =  class IndexerTellerOptions{
             let optionId =  parseInt(outputs['0'])
             let creator = web3utils.toChecksumAddress( outputs['1'] )
             
-            //let nftContractAddress = web3utils.toChecksumAddress( outputs['2'] )
-            //let nftTokenId =   parseInt(outputs['3'])
-
             
             await IndexerTellerOptions.optionCreated( optionId, creator,  mongoInterface )
              
@@ -88,7 +85,7 @@ module.exports =  class IndexerTellerOptions{
     let existing = await mongoInterface.findOne(collectionName, {optionId: optionId }  )
 
     if(!existing){ 
-        //nftContractAddress: nftContractAddress, nftTokenId: nftTokenId 
+      
         await mongoInterface.insertOne(collectionName, { creator:creator, optionId: optionId , status:'created'}   )
     }
 }
