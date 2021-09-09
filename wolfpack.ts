@@ -4,7 +4,7 @@ const Web3 = require('web3')
 const web3Config = require('./config/web3config')
 const WolfPack = require('wolfpack')
 
-const IndexerTellerOptions = require('./IndexerTellerOptions')
+const IndexerTellerOptions = require('./lib/IndexerTellerOptions')
 const TellerOptionsABI = require('./abi/TellerOptionsABI')
 
 async function init(){
