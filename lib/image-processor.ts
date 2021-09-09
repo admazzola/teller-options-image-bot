@@ -40,7 +40,7 @@ export default class ImageProcessor{
 
         
         let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $and:[ { nftContractAddress: { $exists: true }  } ,{$or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]} ]  } )
-        console.log('options without recent', optionsWithoutRecentImages)
+        //console.log('options without recent', optionsWithoutRecentImages)
 
 
         if(optionsWithoutRecentImages[optionIndexToRead] === 'undefined'){

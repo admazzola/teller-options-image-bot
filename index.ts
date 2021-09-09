@@ -5,6 +5,8 @@ import ImageProcessor from './lib/image-processor'
 
 import MongoInterface from './lib/mongo-interface'
 
+const web3Config = require('./config/web3config')
+
 const path = require('path');
 const fs = require('fs');
 
@@ -22,7 +24,7 @@ try{
 async function start(){
 
     let mongoInterface = new MongoInterface()
-    await mongoInterface.init('wolfpack_dev',{})
+    await mongoInterface.init(web3Config.dbName,{})
     
     const optionDataCollector = new OptionDataCollector(mongoInterface)
     optionDataCollector.init() 

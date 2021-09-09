@@ -50,8 +50,10 @@ Rinkeby Teller Options
 
 
  
-### TODO 
+### Tasks 
 
-split up mongo into two separate tables so wolfpack can be remote 
-
-build tasks that make it easy to delete cached image data and to clear the timers 
+Clear the cache for images so they all get rebuilt 
+`
+npm run task rebuild-images 
+`
+ 

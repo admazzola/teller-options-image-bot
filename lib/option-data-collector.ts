@@ -38,14 +38,18 @@ export default class ImageProcessor{
         
         
         let optionsMissingData = await mongoInterface.findManyOptions( {  nftContractAddress: { $exists: false }  }  )
-       
+        //console.log('optionsMissingData',optionsMissingData)
+
+ 
+ 
         if(optionsMissingData[optionIndexToRead] === 'undefined'){
             optionIndexToRead = 0
             return 
         }
 
         let optionData = optionsMissingData[optionIndexToRead] // await mongoInterface.findOption( {optionId: optionIndexToRead} )
-  
+
+         
 
         if(optionData){
            
@@ -61,7 +65,8 @@ export default class ImageProcessor{
                 let nftTokenId = bundleData.ids[0]
                  
                 await mongoInterface.updateOption( {optionId: optionData.optionId}, {nftContractAddress:nftContractAddress, nftTokenId:nftTokenId} )
- 
+
+              
 
             }catch(e){
                 console.error(e)

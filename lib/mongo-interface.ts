@@ -21,8 +21,12 @@ const TellerOption = new Schema({
   status: String,
   creator: String,
   nftContractAddress: String,
-  imageUpdateAttemptedAt: Number,
-  imageLastUpdatedAt: Number
+  imageUpdateAttemptedAt: {
+    type: Number,
+    required: false},
+  imageLastUpdatedAt: {
+    type: Number,
+    required: false} 
 })
 
 
@@ -94,6 +98,12 @@ export default class MongoInterface  {
       console.log('update', instance)
      return instance;
    }
+
+   async updateManyOptions(query: FilterQuery<UnknownType>|undefined ,update: UpdateQuery<UnknownType>|undefined ) : Promise< any > {
+    const instance = await TellerOptionsModel.updateMany(query,update);
+    console.log('update', instance)
+    return instance;
+  }
 
 
     async saveOption( ){

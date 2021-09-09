@@ -16,7 +16,8 @@ async function init(){
             startBlock:   web3Config.tellerOptionsContractStartBlock,
             type:'TellerOptions'
             }],
-        suffix:"dev",
+         
+        dbName: web3Config.dbName,
         indexRate: 10*1000,
         courseBlockGap: 8000,
         logging:true,
@@ -29,7 +30,7 @@ async function init(){
     }
   
     let wolfPack = new WolfPack()
-    await wolfPack.init( {suffix: wolfPackConfig.suffix} )
+    await wolfPack.init( wolfPackConfig )
     wolfPack.startIndexing( web3, wolfPackConfig )  
     
 }
