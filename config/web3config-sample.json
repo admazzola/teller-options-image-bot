@@ -1,6 +1,10 @@
 {
     "web3provider":"https://rinkeby.infura.io/v3/",
 
-    "tellerOptionsContractAddress":""
+    "tellerOptionsContractAddress":"",
+
+    "tellerOptionsContractStartBlock":9257224,
+
+    "env_mode":"development"
 
 }

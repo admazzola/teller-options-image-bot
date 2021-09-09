@@ -3,6 +3,11 @@
 Generates image files for teller options NFTs 
 
 
+#### Getting Started 
+
+Set up configuration in config/web3config.json 
+
+
 
 
 #### Commands 
@@ -41,7 +46,12 @@ yarn webserver
 ####
 
 Rinkeby Teller Options 
-0xf560000371595a1c786e96b9d9ae21a5147dba31 
+0x145ca117C3030bC6019532b410AEa31174791b97 
 
 
  
+### TODO 
+
+split up mongo into two separate tables so wolfpack can be remote 
+
+build tasks that make it easy to delete cached image data and to clear the timers 

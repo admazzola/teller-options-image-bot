@@ -36,7 +36,7 @@ export default class ImageProcessor{
 
     async run(){
         
-        const STALE_TIME = 3600*1000 //one hour 
+        const STALE_TIME =  3600*1000 //one hour 
 
         
         let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $and:[ { nftContractAddress: { $exists: true }  } ,{$or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]} ]  } )
@@ -55,14 +55,18 @@ export default class ImageProcessor{
 
 
         if(optionData){
+
+            let optionId = optionData.optionId
            
             try{
                 let NFTContract = new web3.eth.Contract(ERC721ABI, optionData.nftContractAddress )
                 let tokenURI = await NFTContract.methods.tokenURI( optionData.nftTokenId ).call()
                 
                 console.log(tokenURI)
+
+
     
-                let filePath = path.resolve(__dirname,  '../tokenassets',optionIndexToRead.toString().concat('.json'))
+                let filePath = path.resolve(__dirname,  '../tokenassets',optionId.toString().concat('.json'))
                 
                 await mongoInterface.updateOption( {optionId: optionData.optionId}, {imageUpdateAttemptedAt: Date.now()} )
 
@@ -73,7 +77,7 @@ export default class ImageProcessor{
                 let metadataFile =fs.readFileSync(filePath);
                 let metadataParsed = JSON.parse(metadataFile);
 
-                let imagePath =  path.resolve(__dirname,  '../tokenassets',optionIndexToRead.toString().concat('.jpg'))
+                let imagePath =  path.resolve(__dirname,  '../tokenassets',optionId.toString().concat('.jpg'))
                 await this.downloadAsset(metadataParsed.image, imagePath   )
 
                 let assetName = metadataParsed.name
@@ -87,15 +91,15 @@ export default class ImageProcessor{
                     .then(tellerBorder => {
                         Jimp.read(imagePath)
                         .then(image => {
-                            let formattedImagePath = path.resolve(__dirname,  '../formattedimages',optionIndexToRead.toString().concat('.jpg'))
+                            let formattedImagePath = path.resolve(__dirname,  '../formattedimages',optionId.toString().concat('.jpg'))
     
                             return image
                             
-                            .contain(512, 512, Jimp.HORIZONTAL_ALIGN_LEFT | Jimp.VERTICAL_ALIGN_TOP)
+                            .contain(512, 512, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
                            
                             .composite( tellerBorder,0,0)   
                             
-                            .print(font, 270, 460,   assetName.substring(0,26))
+                            .print(font, 250, 460,   assetName.substring(0,26))
 
                             .write(formattedImagePath); // save
                         })
@@ -127,6 +131,13 @@ export default class ImageProcessor{
     }
 
     async downloadAsset(url:string,image_path:string):Promise<any> {
+
+        if(url.startsWith('ipfs://')){
+
+            url = url.replace('ipfs://','https://gateway.pinata.cloud/ipfs/')
+            
+        }
+
 
        //  const path = path.resolve(__dirname, 'images', 'code.jpg')
         const writer = fs.createWriteStream(image_path)
