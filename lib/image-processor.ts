@@ -66,7 +66,7 @@ export default class ImageProcessor{
 
 
     
-                let filePath = path.resolve(__dirname,  '../tokenassets',optionId.toString().concat('.json'))
+                let filePath = path.resolve(__dirname,  '../dist/tokenassets',optionId.toString().concat('.json'))
                 
                 await mongoInterface.updateOption( {optionId: optionData.optionId}, {imageUpdateAttemptedAt: Date.now()} )
 
@@ -77,7 +77,7 @@ export default class ImageProcessor{
                 let metadataFile =fs.readFileSync(filePath);
                 let metadataParsed = JSON.parse(metadataFile);
 
-                let imagePath =  path.resolve(__dirname,  '../tokenassets',optionId.toString().concat('.jpg'))
+                let imagePath =  path.resolve(__dirname,  '../dist/tokenassets',optionId.toString().concat('.jpg'))
                 await this.downloadAsset(metadataParsed.image, imagePath   )
 
                 let assetName = metadataParsed.name
@@ -85,13 +85,13 @@ export default class ImageProcessor{
                 const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
 
 
-                let tellerBorderImagePath = path.resolve(__dirname,  '../tellerassets', 'TellerOptionsOverlay'.concat('.png'))
+                let tellerBorderImagePath = path.resolve(__dirname,  '../dist/tellerassets', 'TellerOptionsOverlay'.concat('.png'))
 
                 await Jimp.read(tellerBorderImagePath)
                     .then(tellerBorder => {
                         Jimp.read(imagePath)
                         .then(image => {
-                            let formattedImagePath = path.resolve(__dirname,  '../formattedimages',optionId.toString().concat('.jpg'))
+                            let formattedImagePath = path.resolve(__dirname,  '../dist/formattedimages',optionId.toString().concat('.jpg'))
     
                             return image
                             
