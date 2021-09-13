@@ -9,8 +9,8 @@ const TellerOptionsABI = require('./abi/TellerOptionsABI')
 
 async function init(){
     let web3 = new Web3( web3Config.web3provider  )
-
-    let wolfPackConfig = {
+     
+    let wolfPackConfig = {  
         contracts:[{
             address: web3Config.tellerOptionsContractAddress,
             startBlock:   web3Config.tellerOptionsContractStartBlock,
@@ -18,6 +18,8 @@ async function init(){
             }],
          
         dbName: web3Config.dbName,
+        url: web3Config.dbURI,
+        port: parseInt(web3Config.dbPort),
         indexRate: 10*1000,
         courseBlockGap: 8000,
         logging:true,

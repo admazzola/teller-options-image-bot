@@ -23,8 +23,13 @@ try{
 
 async function start(){
 
+    const mongoConfig = {
+        host: web3Config.dbURI,
+        port: parseInt(web3Config.dbPort)
+    }
+
     let mongoInterface = new MongoInterface()
-    await mongoInterface.init(web3Config.dbName,{})
+    await mongoInterface.init(web3Config.dbName,mongoConfig)
     
     const optionDataCollector = new OptionDataCollector(mongoInterface)
     optionDataCollector.init() 

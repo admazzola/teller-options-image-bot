@@ -5,6 +5,12 @@
 
     "tellerOptionsContractStartBlock":9257224,
 
-    "env_mode":"development"
+    "envMode":"development",
+
+    "dbName":"wolfpack_dev",
+
+    "dbURI":"localhost",
+
+    "dbPort":27017
 
 }
