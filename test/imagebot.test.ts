@@ -48,6 +48,9 @@ describe('Web3 Data Collection', function() {
         
         expect(AppHelper.getEnvironmentName()).to.eql('test') 
 
+
+        expect(web3Config.tellerOptionsContractAddress).to.eql('0x145ca117C3030bC6019532b410AEa31174791b97')
+
     });
 
     it('can delete records', async function() {
