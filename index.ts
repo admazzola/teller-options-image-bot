@@ -35,10 +35,10 @@ export default class ImageBot {
   
         let mongoInterface = await this.connectToMongo(web3Config)
         
-        const optionDataCollector = new OptionDataCollector(mongoInterface)
+        const optionDataCollector = new OptionDataCollector(web3Config, mongoInterface)
         optionDataCollector.init() 
         
-        const imageProcessor = new ImageProcessor(mongoInterface)
+        const imageProcessor = new ImageProcessor(web3Config, mongoInterface)
         imageProcessor.init()
          
           

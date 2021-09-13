@@ -2,6 +2,7 @@ var assert = require('assert');
 var chai = require('chai');  
 
 import AppHelper from '../lib/app-helper'
+import OptionDataCollector from '../lib/option-data-collector'
 
 const web3Config = require('../config/web3config')[AppHelper.getEnvironmentName()]
 const expect = chai.expect;
@@ -57,6 +58,21 @@ describe('Web3 Data Collection', function() {
         let existingOptions = await mongoInterface.findManyOptions({})
 
         expect(existingOptions.length).to.eql(1) 
+
+    });
+
+
+    it('can stub a new record', async function() {
+         
+        const optionDataCollector = new OptionDataCollector(web3Config, mongoInterface) 
+
+        await optionDataCollector.run() 
+
+        let existingOption = await mongoInterface.findOption({optionId: 0 })
+        
+        expect(existingOption.nftContractAddress).to.eql('0xc981faC0275727ce45E503D6a748192Bb084ef24') 
+        expect(existingOption.nftTokenId).to.eql(4) 
+ 
 
     });
 

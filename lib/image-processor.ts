@@ -8,12 +8,12 @@ const axios = require('axios');
 
 import Jimp = require('jimp');
  
-
-const web3config = require('../config/web3config')
+var web3config: any
+//const web3config = require('../config/web3config')
 const TellerOptionsABI = require('../abi/TellerOptionsABI')
 const ERC721ABI = require('../abi/ERC721ABI')
 
-const web3 = new Web3(web3config.web3provider)
+var web3:Web3
 
 
 var mongoInterface:MongoInterface;
@@ -22,9 +22,10 @@ var optionIndexToRead = 0;
 
 export default class ImageProcessor{
 
-    constructor(mInterface:MongoInterface){
+    constructor(w3config:any, mInterface:MongoInterface){
+        web3config = w3config; 
         mongoInterface = mInterface;
-        
+        web3 = new Web3(web3config.web3provider)
     }
 
     
