@@ -9,8 +9,7 @@ const axios = require('axios');
 import Jimp = require('jimp');
  
 var web3config: any
-//const web3config = require('../config/web3config')
-const TellerOptionsABI = require('../abi/TellerOptionsABI')
+
 const ERC721ABI = require('../abi/ERC721ABI')
 
 var web3:Web3
@@ -41,8 +40,8 @@ export default class ImageProcessor{
 
         
         let optionsWithoutRecentImages = await mongoInterface.findManyOptions( { $and:[ { nftContractAddress: { $exists: true }  } ,{$or:[{imageUpdateAttemptedAt: null},{imageUpdateAttemptedAt: { $lte: Date.now()-STALE_TIME }}]} ]  } )
-        //console.log('options without recent', optionsWithoutRecentImages)
-
+      
+        
 
         if(optionsWithoutRecentImages[optionIndexToRead] === 'undefined'){
             optionIndexToRead = 0
@@ -83,34 +82,10 @@ export default class ImageProcessor{
 
                 let assetName = metadataParsed.name
 
-                const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
 
+                await this.generateAndSaveFinalImage( optionId, imagePath, assetName )
 
-                let tellerBorderImagePath = path.resolve(__dirname,  '../dist/tellerassets', 'TellerOptionsOverlay'.concat('.png'))
-
-                await Jimp.read(tellerBorderImagePath)
-                    .then(tellerBorder => {
-                        Jimp.read(imagePath)
-                        .then(image => {
-                            let formattedImagePath = path.resolve(__dirname,  '../dist/formattedimages',optionId.toString().concat('.jpg'))
-    
-                            return image
-                            
-                            .contain(512, 512, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
-                           
-                            .composite( tellerBorder,0,0)   
-                            
-                            .print(font, 250, 460,   assetName.substring(0,26))
-
-                            .write(formattedImagePath); // save
-                        })
-                        .catch(err => {
-                            console.error(err);
-                        });
-
-                    }) .catch(err => {
-                        console.error(err);
-                    });
+               
 
                await mongoInterface.updateOption( {optionId: optionData.optionId}, {imageLastUpdatedAt: Date.now()} )
 
@@ -130,6 +105,41 @@ export default class ImageProcessor{
 
 
     }
+    
+    async generateAndSaveFinalImage(optionId:Number, rawImagePath:string, assetName:string){
+
+        const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
+
+
+        let tellerBorderImagePath = path.resolve(__dirname,  '../tellerassets', 'TellerOptionsOverlay'.concat('.png'))
+
+        await Jimp.read(tellerBorderImagePath)
+            .then(tellerBorder => {
+                Jimp.read(rawImagePath)
+                .then(image => {
+                    let formattedImagePath = path.resolve(__dirname,  '../dist/formattedimages',optionId.toString().concat('.jpg'))
+
+                    return image
+                    
+                    .contain(512, 512, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
+                   
+                    .composite( tellerBorder,0,0)   
+                    
+                    .print(font, 250, 460,   assetName.substring(0,26))
+
+                    .write(formattedImagePath); // save
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+
+            }) .catch(err => {
+                console.error(err);
+            });
+
+    }
+
+
 
     async downloadAsset(url:string,image_path:string):Promise<any> {
 

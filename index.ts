@@ -15,12 +15,17 @@ const path = require('path');
 const fs = require('fs');
 
 //generate folders for downloaded metadata assets 
+
 try{
-    fs.mkdirSync(path.resolve(__dirname, './tokenassets'))
+    fs.mkdirSync(path.resolve(__dirname, './dist'))
 }catch(e){}
 
 try{
-    fs.mkdirSync(path.resolve(__dirname, './formattedimages'))
+    fs.mkdirSync(path.resolve(__dirname, './dist/tokenassets'))
+}catch(e){}
+
+try{
+    fs.mkdirSync(path.resolve(__dirname, './dist/formattedimages'))
 }catch(e){}
 
 

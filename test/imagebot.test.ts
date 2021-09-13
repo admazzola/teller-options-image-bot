@@ -3,6 +3,7 @@ var chai = require('chai');
 
 import AppHelper from '../lib/app-helper'
 import OptionDataCollector from '../lib/option-data-collector'
+import ImageProcessor from '../lib/image-processor'
 
 const web3Config = require('../config/web3config')[AppHelper.getEnvironmentName()]
 const expect = chai.expect;
@@ -62,7 +63,7 @@ describe('Web3 Data Collection', function() {
     });
 
 
-    it('can stub a new record', async function() {
+    it('can collect web3 data for option', async function() {
          
         const optionDataCollector = new OptionDataCollector(web3Config, mongoInterface) 
 
@@ -74,6 +75,21 @@ describe('Web3 Data Collection', function() {
         expect(existingOption.nftTokenId).to.eql(4) 
  
 
+    });
+
+
+    it('can collect image uri data', async function() {
+         
+        const imageProcessor = new ImageProcessor(web3Config, mongoInterface) 
+
+        await imageProcessor.run() 
+
+        let existingOption = await mongoInterface.findOption({optionId: 0 })
+        
+        //expect(existingOption.nftContractAddress).to.eql('0xc981faC0275727ce45E503D6a748192Bb084ef24') 
+        //expect(existingOption.nftTokenId).to.eql(4) 
+ 
+        console.log('existingOption',existingOption)
     });
 
 
