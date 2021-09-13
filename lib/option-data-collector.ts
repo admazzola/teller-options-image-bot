@@ -13,7 +13,7 @@ const web3config = require('../config/web3config')
 const TellerOptionsABI = require('../abi/TellerOptionsABI')
 const ERC721ABI = require('../abi/ERC721ABI')
 
-const web3 = new Web3(web3config.web3provider)
+var web3: Web3 
 
 
 var mongoInterface:MongoInterface;
@@ -23,7 +23,7 @@ export default class ImageProcessor{
 
     constructor(mInterface:MongoInterface){
         mongoInterface = mInterface;
-        
+        web3 = new Web3(web3config.web3provider)
     }
  
 

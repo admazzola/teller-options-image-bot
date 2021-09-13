@@ -19,28 +19,45 @@ try{
     fs.mkdirSync(path.resolve(__dirname, './formattedimages'))
 }catch(e){}
 
- 
 
-async function start(){
 
-    const mongoConfig = {
-        host: web3Config.dbURI,
-        port: parseInt(web3Config.dbPort)
+
+
+export default class ImageBot {
+
+    async start(){
+  
+        let mongoInterface = await this.connectToMongo(web3Config)
+        
+        const optionDataCollector = new OptionDataCollector(mongoInterface)
+        optionDataCollector.init() 
+        
+        const imageProcessor = new ImageProcessor(mongoInterface)
+        imageProcessor.init()
+         
+          
+        console.log('Booting Teller Options Image Bot')
+        
     }
 
-    let mongoInterface = new MongoInterface()
-    await mongoInterface.init(web3Config.dbName,mongoConfig)
-    
-    const optionDataCollector = new OptionDataCollector(mongoInterface)
-    optionDataCollector.init() 
-    
-    const imageProcessor = new ImageProcessor(mongoInterface)
-    imageProcessor.init()
-     
-      
-    console.log('Booting Teller Options Image Bot')
-    
+
+
+    async connectToMongo( w3config:any ){
+        const mongoConfig = {
+            host: web3Config.dbURI,
+            port: parseInt(web3Config.dbPort)
+        }
+
+        let mongoInterface = new MongoInterface()
+        await mongoInterface.init(web3Config.dbName,mongoConfig)
+
+        return mongoInterface
+    }
+ 
+
+
 }
 
-
-start()
+const bot = new ImageBot()
+bot.start()
+ 

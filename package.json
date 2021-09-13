@@ -6,9 +6,9 @@
   "scripts": {
     "start": "npx ts-node index.ts ",
     "task": "npx ts-node tasks.ts",
+    "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register 'test/**/*.ts' --timeout 25000",
     "wolfpack": "npx ts-node wolfpack.ts",
     "webserver": "npx ts-node  webserver.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "copy-files": "cp -r ./config/ ./dist && cp -r ./abi/ ./dist && cp -r ./tellerassets/ ./dist",
     "build": "yarn tsc && yarn copy-files"
   },
@@ -33,6 +33,8 @@
     "wolfpack": "git+https://github.com/admazzola/wolfpack.git"
   },
   "devDependencies": {
-    "@types/mkdirp": "^1.0.2"
+    "@types/mkdirp": "^1.0.2",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4"
   }
 }
