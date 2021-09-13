@@ -5,7 +5,11 @@ import ImageProcessor from './lib/image-processor'
 
 import MongoInterface from './lib/mongo-interface'
 
-const web3Config = require('./config/web3config')
+import AppHelper from './lib/app-helper'
+
+const web3ConfigJson = require('./config/web3config')
+
+var web3Config:any;
 
 const path = require('path');
 const fs = require('fs');
@@ -26,6 +30,8 @@ try{
 export default class ImageBot {
 
     async start(){
+
+        web3Config = web3ConfigJson[AppHelper.getEnvironmentName()]
   
         let mongoInterface = await this.connectToMongo(web3Config)
         
@@ -36,7 +42,7 @@ export default class ImageBot {
         imageProcessor.init()
          
           
-        console.log('Booting Teller Options Image Bot')
+        console.log(`Booting Teller Options Image Bot - ${AppHelper.getEnvironmentName()}`)
         
     }
 

@@ -38,10 +38,7 @@ export default class ImageProcessor{
         
         
         let optionsMissingData = await mongoInterface.findManyOptions( {  nftContractAddress: { $exists: false }  }  )
-        //console.log('optionsMissingData',optionsMissingData)
-
- 
- 
+     
         if(optionsMissingData[optionIndexToRead] === 'undefined'){
             optionIndexToRead = 0
             return 

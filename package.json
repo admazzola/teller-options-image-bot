@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx ts-node index.ts ",
     "task": "npx ts-node tasks.ts",
-    "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register 'test/**/*.ts' --timeout 25000",
+    "test": "env NODE_ENV=test TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register 'test/**/*.ts' --timeout 25000",
     "wolfpack": "npx ts-node wolfpack.ts",
     "webserver": "npx ts-node  webserver.ts",
     "copy-files": "cp -r ./config/ ./dist && cp -r ./abi/ ./dist && cp -r ./tellerassets/ ./dist",
