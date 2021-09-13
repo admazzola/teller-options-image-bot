@@ -6,7 +6,7 @@
     
         "tellerOptionsContractStartBlock":9257224,
     
-        "dbName":"wolfpack_dev",
+        "dbName":"wolfpack_production",
     
         "dbURI":"localhost",
     
@@ -19,7 +19,7 @@
 
         "tellerOptionsContractStartBlock":9257224,
 
-        "dbName":"wolfpack_dev",
+        "dbName":"wolfpack_staging",
 
         "dbURI":"localhost",
 
@@ -32,7 +32,7 @@
     
         "tellerOptionsContractStartBlock":9257224,
     
-        "dbName":"wolfpack_dev",
+        "dbName":"wolfpack_test",
     
         "dbURI":"localhost",
     

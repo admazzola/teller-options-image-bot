@@ -1,12 +1,21 @@
 var assert = require('assert');
 var chai = require('chai');  
 
+
+
+const fs = require('fs');
+const path = require('path');
+
+
 import AppHelper from '../lib/app-helper'
 import OptionDataCollector from '../lib/option-data-collector'
 import ImageProcessor from '../lib/image-processor'
 
 const web3Config = require('../config/web3config')[AppHelper.getEnvironmentName()]
 const expect = chai.expect;
+const should = chai.should;
+
+should()
 
 
 import ImageBot from '../index'
@@ -85,11 +94,13 @@ describe('Web3 Data Collection', function() {
         await imageProcessor.run() 
 
         let existingOption = await mongoInterface.findOption({optionId: 0 })
+
+        let formattedImagePath = path.resolve(__dirname,  '../dist/formattedimages',existingOption.optionId.toString().concat('.jpg'))
         
-        //expect(existingOption.nftContractAddress).to.eql('0xc981faC0275727ce45E503D6a748192Bb084ef24') 
-        //expect(existingOption.nftTokenId).to.eql(4) 
- 
-        console.log('existingOption',existingOption)
+        let savedFormattedImage = fs.readFileSync(formattedImagePath);
+        
+        savedFormattedImage.should.exist 
+        
     });
 
 
