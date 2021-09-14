@@ -20,9 +20,7 @@ should()
 
 import ImageBot from '../index'
 import MongoInterface from '../lib/mongo-interface';
-
-import IndexerTellerOptions from '../lib/IndexerTellerOptions'
-
+ 
 var mongoInterface:MongoInterface
 
 describe('MongoDB', function() {
