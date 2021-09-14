@@ -10,7 +10,9 @@
     
         "dbURI":"localhost",
     
-        "dbPort":27017
+        "dbPort":27017,
+
+        "apiURL":"https://api.niftyoptions.org/"
     },
     "staging":{
         "web3provider":"https://rinkeby.infura.io/v3/",
@@ -23,7 +25,9 @@
 
         "dbURI":"localhost",
 
-        "dbPort":27017
+        "dbPort":27017,
+
+        "apiURL":"https://api.niftyoptions.org/"
     },
     "test":{
         "web3provider":"https://rinkeby.infura.io/v3/",
@@ -36,7 +40,9 @@
     
         "dbURI":"localhost",
     
-        "dbPort":27017
+        "dbPort":27017,
+
+        "apiURL":"https://api.niftyoptions.org/"
     }
 
 }

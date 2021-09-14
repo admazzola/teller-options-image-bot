@@ -110,7 +110,17 @@ export default class ImageProcessor{
 
     async generateAndSaveFinalMetadata(optionId:Number,assetName:string){
 
+        let finalMetadataPath = path.resolve(__dirname,  '../dist/finaltokenmetadata',optionId.toString().concat('.json'))
+
+        let generatedMetadata = {
+            name:`${assetName} (Option)`,
+            description:'NFT Options Contract',
+            image: `${web3config.apiURL}image/${optionId.toString()}`
+        }
+
+        const jsonOutput = JSON.stringify(generatedMetadata)
         
+        fs.writeFileSync(finalMetadataPath, jsonOutput)
 
     }
     
