@@ -82,6 +82,7 @@ export default class ImageProcessor{
 
                 let assetName = metadataParsed.name
 
+                await this.generateAndSaveFinalMetadata( optionId, assetName )
 
                 await this.generateAndSaveFinalImage( optionId, imagePath, assetName )
 
@@ -105,6 +106,13 @@ export default class ImageProcessor{
 
 
     }
+
+
+    async generateAndSaveFinalMetadata(optionId:Number,assetName:string){
+
+        
+
+    }
     
     async generateAndSaveFinalImage(optionId:Number, rawImagePath:string, assetName:string){
 
@@ -117,7 +125,7 @@ export default class ImageProcessor{
             .then(tellerBorder => {
                 Jimp.read(rawImagePath)
                 .then(image => {
-                    let formattedImagePath = path.resolve(__dirname,  '../dist/formattedimages',optionId.toString().concat('.jpg'))
+                    let formattedImagePath = path.resolve(__dirname,  '../dist/finaltokenimages',optionId.toString().concat('.jpg'))
 
                     return image
                     

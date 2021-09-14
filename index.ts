@@ -22,10 +22,14 @@ try{
 
 try{
     fs.mkdirSync(path.resolve(__dirname, './dist/tokenassets'))
+}catch(e){} 
+ 
+try{
+    fs.mkdirSync(path.resolve(__dirname, './dist/finaltokenmetadata'))
 }catch(e){}
 
 try{
-    fs.mkdirSync(path.resolve(__dirname, './dist/formattedimages'))
+    fs.mkdirSync(path.resolve(__dirname, './dist/finaltokenimages'))
 }catch(e){}
 
 

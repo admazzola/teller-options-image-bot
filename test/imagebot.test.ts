@@ -98,7 +98,7 @@ describe('Web3 Data Collection', function() {
 
         let existingOption = await mongoInterface.findOption({optionId: 0 })
 
-        let formattedImagePath = path.resolve(__dirname,  '../dist/formattedimages',existingOption.optionId.toString().concat('.jpg'))
+        let formattedImagePath = path.resolve(__dirname,  '../dist/finaltokenimages',existingOption.optionId.toString().concat('.jpg'))
         
         let savedFormattedImage = fs.readFileSync(formattedImagePath);
         
