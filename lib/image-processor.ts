@@ -8,15 +8,15 @@ const axios = require('axios');
 
 import Jimp = require('jimp');
  
-var web3config: any
+let web3config: any
 
 const ERC721ABI = require('../abi/ERC721ABI')
 
-var web3:Web3
+let web3:Web3
 
 
-var mongoInterface:MongoInterface;
-var optionIndexToRead = 0;   
+let mongoInterface:MongoInterface;
+let optionIndexToRead = 0;   
 
 
 export default class ImageProcessor{
