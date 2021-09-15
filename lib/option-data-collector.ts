@@ -8,8 +8,9 @@ const axios = require('axios');
 
 import Jimp = require('jimp');
  
+var web3config: any; 
 
-const web3config = require('../config/web3config')
+//const web3config = require('../config/web3config')
 const TellerOptionsABI = require('../abi/TellerOptionsABI')
 const ERC721ABI = require('../abi/ERC721ABI')
 
@@ -21,7 +22,8 @@ var optionIndexToRead = 0;
  
 export default class ImageProcessor{
 
-    constructor(mInterface:MongoInterface){
+    constructor(w3config:any, mInterface:MongoInterface){
+        web3config = w3config;
         mongoInterface = mInterface;
         web3 = new Web3(web3config.web3provider)
     }
@@ -38,10 +40,7 @@ export default class ImageProcessor{
         
         
         let optionsMissingData = await mongoInterface.findManyOptions( {  nftContractAddress: { $exists: false }  }  )
-        //console.log('optionsMissingData',optionsMissingData)
-
- 
- 
+     
         if(optionsMissingData[optionIndexToRead] === 'undefined'){
             optionIndexToRead = 0
             return 

@@ -1,9 +1,18 @@
 
  import MongoInterface from './lib/mongo-interface'
  
-const web3Config = require('./config/web3config')
+import AppHelper from './lib/app-helper'
+
+ const web3ConfigJson = require('./config/web3config')
+
+var web3Config:any;
+
 
 async function tasks(){
+
+    web3Config = web3ConfigJson[AppHelper.getEnvironmentName()]
+  
+
 
     var args = process.argv.slice(2);
 
@@ -24,7 +33,8 @@ async function tasks(){
 }
 
 async function rebuildImages(mongoInterface:MongoInterface){
-    console.log('rebuilding images ')
+    console.log(`Task - Rebuild Images - ${AppHelper.getEnvironmentName()}`)
+      
 
     await mongoInterface.updateManyOptions( {}, {$set:{imageUpdateAttemptedAt:null, imageLastUpdatedAt:null}} )
 

@@ -1,16 +1,48 @@
 {
-    "web3provider":"https://rinkeby.infura.io/v3/",
+    "production":{
+        "web3provider":"https://rinkeby.infura.io/v3/",
 
-    "tellerOptionsContractAddress":"",
+        "tellerOptionsContractAddress":"0x145ca117C3030bC6019532b410AEa31174791b97",
+    
+        "tellerOptionsContractStartBlock":9257224,
+    
+        "dbName":"wolfpack_production",
+    
+        "dbURI":"localhost",
+    
+        "dbPort":27017,
 
-    "tellerOptionsContractStartBlock":9257224,
+        "apiURL":"https://api.niftyoptions.org/"
+    },
+    "staging":{
+        "web3provider":"https://rinkeby.infura.io/v3/",
 
-    "envMode":"development",
+        "tellerOptionsContractAddress":"0x145ca117C3030bC6019532b410AEa31174791b97",
 
-    "dbName":"wolfpack_dev",
+        "tellerOptionsContractStartBlock":9257224,
 
-    "dbURI":"localhost",
+        "dbName":"wolfpack_staging",
 
-    "dbPort":27017
+        "dbURI":"localhost",
+
+        "dbPort":27017,
+
+        "apiURL":"https://api.niftyoptions.org/"
+    },
+    "test":{
+        "web3provider":"https://rinkeby.infura.io/v3/",
+
+        "tellerOptionsContractAddress":"0x145ca117C3030bC6019532b410AEa31174791b97",
+    
+        "tellerOptionsContractStartBlock":9257224,
+    
+        "dbName":"wolfpack_test",
+    
+        "dbURI":"localhost",
+    
+        "dbPort":27017,
+
+        "apiURL":"https://api.niftyoptions.org/"
+    }
 
 }
