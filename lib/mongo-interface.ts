@@ -1,5 +1,5 @@
  
-import  {FilterQuery, Mongoose, Document, UpdateQuery, Query} from 'mongoose'; 
+import  {FilterQuery, Mongoose, Document, UpdateQuery, Query, AnyKeys} from 'mongoose'; 
 import { UnknownType } from 'typechain';
  
 let mongoose = new Mongoose()
@@ -90,8 +90,22 @@ export default class MongoInterface  {
      return instance;
    }
 
+   async insertOption(doc?: (AnyKeys<unknown> )) : Promise< any > {
+    const instance = new TellerOptionsModel( doc )
+    await instance.save()
+    console.log('update', instance)
+   return instance;
+ }
+
    async updateManyOptions(query: FilterQuery<UnknownType>|undefined ,update: UpdateQuery<UnknownType>|undefined ) : Promise< any > {
     const instance = await TellerOptionsModel.updateMany(query,update);
+    console.log('update', instance)
+    return instance;
+  }
+
+
+  async deleteManyOptions(query: FilterQuery<UnknownType>|undefined  ) : Promise< any > {
+    const instance = await TellerOptionsModel.deleteMany(query);
     console.log('update', instance)
     return instance;
   }

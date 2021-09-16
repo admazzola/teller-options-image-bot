@@ -5,18 +5,31 @@ import ImageProcessor from './lib/image-processor'
 
 import MongoInterface from './lib/mongo-interface'
 
-const web3Config = require('./config/web3config')
+import AppHelper from './lib/app-helper'
+
+const web3ConfigJson = require('./config/web3config')
+
+var web3Config:any;
 
 const path = require('path');
 const fs = require('fs');
 
 //generate folders for downloaded metadata assets 
+
 try{
-    fs.mkdirSync(path.resolve(__dirname, './tokenassets'))
+    fs.mkdirSync(path.resolve(__dirname, './dist'))
 }catch(e){}
 
 try{
-    fs.mkdirSync(path.resolve(__dirname, './formattedimages'))
+    fs.mkdirSync(path.resolve(__dirname, './dist/tokenassets'))
+}catch(e){} 
+ 
+try{
+    fs.mkdirSync(path.resolve(__dirname, './dist/finaltokenmetadata'))
+}catch(e){}
+
+try{
+    fs.mkdirSync(path.resolve(__dirname, './dist/finaltokenimages'))
 }catch(e){}
 
 
@@ -26,17 +39,19 @@ try{
 export default class ImageBot {
 
     async start(){
+
+        web3Config = web3ConfigJson[AppHelper.getEnvironmentName()]
   
         let mongoInterface = await this.connectToMongo(web3Config)
         
-        const optionDataCollector = new OptionDataCollector(mongoInterface)
+        const optionDataCollector = new OptionDataCollector(web3Config, mongoInterface)
         optionDataCollector.init() 
         
-        const imageProcessor = new ImageProcessor(mongoInterface)
+        const imageProcessor = new ImageProcessor(web3Config, mongoInterface)
         imageProcessor.init()
          
           
-        console.log('Booting Teller Options Image Bot')
+        console.log(`Booting Teller Options Image Bot - ${AppHelper.getEnvironmentName()}`)
         
     }
 

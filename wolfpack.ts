@@ -1,13 +1,29 @@
 
 const Web3 = require('web3')
 
-const web3Config = require('./config/web3config')
+ 
 const WolfPack = require('wolfpack')
+
+const web3ConfigJson = require('./config/web3config')
+
+var web3Config:any;
+
+
+import AppHelper from './lib/app-helper'
+
+
 
 const IndexerTellerOptions = require('./lib/IndexerTellerOptions')
 const TellerOptionsABI = require('./abi/TellerOptionsABI')
 
 async function init(){
+
+    console.log(`Booting Wolfpack Web3 Event Collector - ${AppHelper.getEnvironmentName()}`)
+     
+
+    web3Config = web3ConfigJson[AppHelper.getEnvironmentName()]
+  
+
     let web3 = new Web3( web3Config.web3provider  )
      
     let wolfPackConfig = {  
