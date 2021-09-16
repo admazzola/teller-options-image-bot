@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "image-processor",
+      "script": "yarn start"
+    },
+        {
+      "name": "wolfpack",
+      "script": "yarn wolfpack"
+    },
+     {
+      "name": "webserver",
+      "script": "yarn webserver"
+    },
+  ]
+}
