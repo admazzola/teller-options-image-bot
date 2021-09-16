@@ -129,7 +129,7 @@ export default class ImageProcessor{
         const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
 
 
-        let tellerBorderImagePath = path.resolve(__dirname,  '../tellerassets', 'TellerOptionsOverlay'.concat('.png'))
+        let tellerBorderImagePath = path.resolve(__dirname,  '../niftyassets', 'NiftyOptionsOverlay'.concat('.png'))
 
         await Jimp.read(tellerBorderImagePath)
             .then(tellerBorder => {
