@@ -1,8 +1,8 @@
-## Teller Options Image Bot
+## Nifty Options Image Bot
 
-Generates image files for teller options NFTs.  This repo contains 2 separate services. 
+Generates image files for options NFTs.  This repo contains 2 separate services. 
 
-1.  Using the command 'yarn wolfpack' will start a service which will continuously collect events from the Teller Options contract (specified in config/web3config.json) and will then store those records in MongoDB 
+1.  Using the command 'yarn wolfpack' will start a service which will continuously collect events from the Options contract (specified in config/web3config.json) and will then store those records in MongoDB 
 
 2.  Using the command 'yarn start' will start a separate service which will monitor MongoDB records in order to fetch the corresponding image files from the NFT metadata URIs.   This service downloads those images, automatically scales and overlays the image with a custom overlay template, and re-saves the images inside of 'dist/formattedimages.'
 
@@ -51,7 +51,7 @@ yarn webserver
 
 ####
 
-Rinkeby Teller Options 
+Rinkeby Options 
 0x145ca117C3030bC6019532b410AEa31174791b97 
 
 

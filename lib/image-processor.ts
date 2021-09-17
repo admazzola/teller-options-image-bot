@@ -129,10 +129,10 @@ export default class ImageProcessor{
         const font = await Jimp.loadFont(Jimp.FONT_SANS_16_WHITE);
 
 
-        let tellerBorderImagePath = path.resolve(__dirname,  '../niftyassets', 'NiftyOptionsOverlay'.concat('.png'))
+        let overlayBorderImagePath = path.resolve(__dirname,  '../niftyassets', 'NiftyOptionsOverlay'.concat('.png'))
 
-        await Jimp.read(tellerBorderImagePath)
-            .then(tellerBorder => {
+        await Jimp.read(overlayBorderImagePath)
+            .then(overlayBorder => {
                 Jimp.read(rawImagePath)
                 .then(image => {
                     let formattedImagePath = path.resolve(__dirname,  '../dist/finaltokenimages',optionId.toString().concat('.jpg'))
@@ -141,7 +141,7 @@ export default class ImageProcessor{
                     
                     .contain(512, 512, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
                    
-                    .composite( tellerBorder,0,0)   
+                    .composite( overlayBorder,0,0)   
                     
                     .print(font, 250, 460,   assetName.substring(0,26))
 

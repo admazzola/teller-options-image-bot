@@ -13,8 +13,8 @@ import AppHelper from './lib/app-helper'
 
 
 
-const IndexerTellerOptions = require('./lib/IndexerTellerOptions')
-const TellerOptionsABI = require('./abi/TellerOptionsABI')
+const IndexerNiftyOptions = require('./lib/IndexerNiftyOptions')
+const NiftyOptionsABI = require('./abi/NiftyOptionsABI')
 
 async function init(){
 
@@ -28,9 +28,9 @@ async function init(){
      
     let wolfPackConfig = {  
         contracts:[{
-            address: web3Config.tellerOptionsContractAddress,
-            startBlock:   web3Config.tellerOptionsContractStartBlock,
-            type:'TellerOptions'
+            address: web3Config.niftyOptionsContractAddress,
+            startBlock:   web3Config.niftyOptionsContractStartBlock,
+            type:'NiftyOptions'
             }],
          
         dbName: web3Config.dbName,
@@ -41,9 +41,9 @@ async function init(){
         logging:true,
         reScale: false,
         customIndexers:[{
-            type:'TellerOptions', 
-            abi: TellerOptionsABI ,  
-            handler: IndexerTellerOptions 
+            type:'NiftyOptions', 
+            abi: NiftyOptionsABI ,  
+            handler: IndexerNiftyOptions 
          }]
     }
   
