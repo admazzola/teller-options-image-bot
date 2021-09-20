@@ -11,6 +11,6 @@
      {
       "name": "webserver",
       "script": "yarn webserver"
-    },
+    }
   ]
 }

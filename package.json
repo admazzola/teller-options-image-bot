@@ -1,5 +1,5 @@
 {
-  "name": "teller-options-image-bot",
+  "name": "nifty-options-image-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "test": "env NODE_ENV=test TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --require ts-node/register 'test/**/*.ts' --timeout 25000",
     "wolfpack": "npx ts-node wolfpack.ts",
     "webserver": "npx ts-node  webserver.ts",
-    "copy-files": "cp -r ./config/ ./dist && cp -r ./abi/ ./dist && cp -r ./tellerassets/ ./dist",
+    "copy-files": "cp -r ./config/ ./dist && cp -r ./abi/ ./dist && cp -r ./niftyassets/ ./dist",
     "build": "yarn tsc && yarn copy-files"
   },
   "author": "",

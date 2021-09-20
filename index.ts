@@ -51,7 +51,7 @@ export default class ImageBot {
         imageProcessor.init()
          
           
-        console.log(`Booting Teller Options Image Bot - ${AppHelper.getEnvironmentName()}`)
+        console.log(`Booting Options Image Bot - ${AppHelper.getEnvironmentName()}`)
         
     }
 

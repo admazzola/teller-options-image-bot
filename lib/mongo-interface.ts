@@ -7,7 +7,7 @@ let mongoose = new Mongoose()
 const Schema = mongoose.Schema;
  
  
-const TellerOption = new Schema({
+const OptionSchema = new Schema({
   optionId: Number,
   nftTokenId: Number,
   status: String,
@@ -22,7 +22,7 @@ const TellerOption = new Schema({
 })
 
 
-const TellerOptionsModel = mongoose.model('teller_options', TellerOption);
+const OptionsModel = mongoose.model('nifty_options', OptionSchema);
 
 export default class MongoInterface  {
   
@@ -71,13 +71,13 @@ export default class MongoInterface  {
  
 
     async findOption(query: FilterQuery<UnknownType>|undefined ) : Promise< any > {
-       const instance = await TellerOptionsModel.findOne(query );
+       const instance = await OptionsModel.findOne(query );
       
       return instance;
     }
 
     async findManyOptions(query: FilterQuery<UnknownType> ) : Promise< any > {
-      const instance = await TellerOptionsModel.find(query);
+      const instance = await OptionsModel.find(query);
      
      return instance;
    }
@@ -85,27 +85,27 @@ export default class MongoInterface  {
 
 
     async updateOption(query: FilterQuery<UnknownType>|undefined ,update: UpdateQuery<UnknownType>|undefined ) : Promise< any > {
-      const instance = await TellerOptionsModel.findOneAndUpdate(query,update);
+      const instance = await OptionsModel.findOneAndUpdate(query,update);
       console.log('update', instance)
      return instance;
    }
 
    async insertOption(doc?: (AnyKeys<unknown> )) : Promise< any > {
-    const instance = new TellerOptionsModel( doc )
+    const instance = new OptionsModel( doc )
     await instance.save()
     console.log('update', instance)
    return instance;
  }
 
    async updateManyOptions(query: FilterQuery<UnknownType>|undefined ,update: UpdateQuery<UnknownType>|undefined ) : Promise< any > {
-    const instance = await TellerOptionsModel.updateMany(query,update);
+    const instance = await OptionsModel.updateMany(query,update);
     console.log('update', instance)
     return instance;
   }
 
 
   async deleteManyOptions(query: FilterQuery<UnknownType>|undefined  ) : Promise< any > {
-    const instance = await TellerOptionsModel.deleteMany(query);
+    const instance = await OptionsModel.deleteMany(query);
     console.log('update', instance)
     return instance;
   }

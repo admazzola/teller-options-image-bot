@@ -11,7 +11,7 @@ import Jimp = require('jimp');
 var web3config: any; 
 
 //const web3config = require('../config/web3config')
-const TellerOptionsABI = require('../abi/TellerOptionsABI')
+const NiftyOptionsABI = require('../abi/NiftyOptionsABI')
 const ERC721ABI = require('../abi/ERC721ABI')
 
 var web3: Web3 
@@ -53,7 +53,7 @@ export default class ImageProcessor{
         if(optionData){
            
             try{
-                let optionsContract = new web3.eth.Contract(TellerOptionsABI, web3config.tellerOptionsContractAddress )
+                let optionsContract = new web3.eth.Contract(NiftyOptionsABI, web3config.niftyOptionsContractAddress )
  
                 let bundleData = await optionsContract.methods.bundleOf( optionData.optionId ).call()
                 
