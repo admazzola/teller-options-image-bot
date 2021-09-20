@@ -1,4 +1,8 @@
 {
-    "name":"Nifty Options"
-
-}
+    "name": "Nifty Options",
+    "description": "Nifty option contracts offer the right, but not the obligation, to sell a specific NFT at an agreed upon price and expiration date. Each NFT in this collection represents an NFT option contract, created by an NFT owner. The option contract may be created, filled, expired, or closed.",
+    "image": "ipfs://QmZvZ9GdigQK4eBPphcm6enxm3fGma7j5kgw3JwvSaTGYg",
+    "external_link": "https://niftyoptions.org",
+    "seller_fee_basis_points": "250",
+    "fee_recipient": "0xb46Ee7DFFC3fFcb8a7f93FfBba0bC7d0A5a7acF3"
+  }
