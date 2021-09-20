@@ -1,36 +1,31 @@
  
-import  {FilterQuery, Mongoose, Document, UpdateQuery, Query} from 'mongoose'; 
+import  {FilterQuery, Mongoose, Document, UpdateQuery, Query, AnyKeys} from 'mongoose'; 
 import { UnknownType } from 'typechain';
  
 let mongoose = new Mongoose()
 
 const Schema = mongoose.Schema;
  
-/*
-const NonFungibleToken = new Schema({ 
-  tokenId: Number,
-  contractAddress: String,
-  hasCachedImage: Boolean,
-  TokenURI: String,
-  cachedMetadata: Object
-});*/
-
+ 
 const TellerOption = new Schema({
   optionId: Number,
   nftTokenId: Number,
   status: String,
   creator: String,
   nftContractAddress: String,
-  imageUpdateAttemptedAt: Number,
-  imageLastUpdatedAt: Number
+  imageUpdateAttemptedAt: {
+    type: Number,
+    required: false},
+  imageLastUpdatedAt: {
+    type: Number,
+    required: false} 
 })
 
 
 const TellerOptionsModel = mongoose.model('teller_options', TellerOption);
 
 export default class MongoInterface  {
- 
-
+  
 
     constructor( ){
       
@@ -95,18 +90,28 @@ export default class MongoInterface  {
      return instance;
    }
 
+   async insertOption(doc?: (AnyKeys<unknown> )) : Promise< any > {
+    const instance = new TellerOptionsModel( doc )
+    await instance.save()
+    console.log('update', instance)
+   return instance;
+ }
 
-    async saveOption( ){
-      
-    }
-    
+   async updateManyOptions(query: FilterQuery<UnknownType>|undefined ,update: UpdateQuery<UnknownType>|undefined ) : Promise< any > {
+    const instance = await TellerOptionsModel.updateMany(query,update);
+    console.log('update', instance)
+    return instance;
+  }
 
 
-    
-     getMongoClient()
-     {
-       return mongoose;
-     }
+  async deleteManyOptions(query: FilterQuery<UnknownType>|undefined  ) : Promise< any > {
+    const instance = await TellerOptionsModel.deleteMany(query);
+    console.log('update', instance)
+    return instance;
+  }
+ 
+
+ 
 
 
 

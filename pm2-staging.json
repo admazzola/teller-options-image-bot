@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "image-processor",
+      "script": "NODE_ENV=staging yarn start"
+    },
+        {
+      "name": "wolfpack",
+      "script": "NODE_ENV=staging yarn wolfpack"
+    },
+     {
+      "name": "webserver",
+      "script": "NODE_ENV=staging yarn webserver"
+    },
+  ]
+}
